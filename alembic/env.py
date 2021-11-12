@@ -59,11 +59,6 @@ def run_migrations_online():
     and associate a connection with the context.
 
     """
-
-    config_section = config.get_section(config.config_ini_section)
-    url = f'postgresql://{settings.db_user}:{settings.db_pass}@{settings.db_host}/{settings.db_name}'
-    config_section["sqlalchemy.url"] = url
-
     connectable = engine_from_config(
         config.get_section(config.config_ini_section),
         prefix="sqlalchemy.",
@@ -80,7 +75,6 @@ def run_migrations_online():
 
 
 if context.is_offline_mode():
-    print("Hello World!!!")
     run_migrations_offline()
 else:
     run_migrations_online()
