@@ -10,7 +10,7 @@ router = APIRouter(
 )
 
 @router.post("", response_model=schemas.UserResponse)
-def create_post(res: Response, payload: schemas.UserCreate, db: Session = Depends(get_db)):
+def create_user(res: Response, payload: schemas.UserCreate, db: Session = Depends(get_db)):
     hashed_password = utils.hash(payload.password)
     payload.password = hashed_password
 

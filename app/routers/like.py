@@ -11,7 +11,7 @@ router = APIRouter(
     tags=['Like']
 ) 
 
-@router.post("/")
+@router.post("")
 def like(res: Response, payload: Like, db: Session = Depends(get_db), current_user: models.User = Depends(get_current_user)):
     post = db.query(models.Post).filter(models.Post.id == payload.post_id).first()
 

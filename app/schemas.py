@@ -41,7 +41,7 @@ class PostBase(BaseModel):
 class PostCreate(PostBase):
     pass
 
-class PostUpdate(BaseModel):
+class PostUpdate(PostBase):
     pass
 
 class PostResponseData(PostBase):

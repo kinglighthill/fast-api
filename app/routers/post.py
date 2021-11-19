@@ -21,8 +21,8 @@ def create_post(res: Response, payload: schemas.PostCreate, db: Session = Depend
     return utils.get_response(res, "post created successfully", status.HTTP_201_CREATED, post)
 
 
-
-@router.get("", response_model=schemas.PostLikeResponseList)
+# , response_model=schemas.PostLikeResponseList
+@router.get("")
 def get_posts(res: Response, db: Session = Depends(get_db), current_user: models.User = Depends(oauth2.get_current_user), limit: int = 10, skip: int = 0, search: Optional[str] = ""):
     # posts = db.query(models.Post).filter(models.Post.title.contains(search)).limit(limit).offset(skip).all()
     posts = db.query(models.Post, func.count(models.Like.post_id).label("likes")).join(models.Like, models.Like.post_id == models.Post.id, isouter=True).group_by(models.Post.id).filter(models.Post.title.contains(search)).limit(limit).offset(skip).all()
@@ -64,8 +64,8 @@ def update_post(res: Response, id: int, payload: schemas.PostUpdate, db: Session
     return utils.get_response(res, "post updated successfully", status.HTTP_205_RESET_CONTENT, post)
 
 
-
-@router.delete("/{id}", response_model=schemas.PostResponse)
+# , response_model=schemas.PostResponse
+@router.delete("/{id}")
 def delete_post(res: Response, id: int,  db: Session = Depends(get_db), current_user: models.User = Depends(oauth2.get_current_user)):
     post_query = db.query(models.Post).filter(models.Post.id == id)
     post = post_query.first()
