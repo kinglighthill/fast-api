@@ -1,9 +1,11 @@
 name: Build and Deploy Code
 
-on: ["push"]
+on: [push]
 
 jobs:
   job1:
+    env:
+      - .env
     runs-on: ubuntu-latest
     steps:
       - name: pulling git repo
