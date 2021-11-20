@@ -20,7 +20,7 @@ jobs:
       ALGORITHM: ${{secrets.ALGORITHM}}
       ACCESS_TOKEN_EXPIRY: ${{secrets.ACCESS_TOKEN_EXPIRY}}
 
-    service:
+    services:
       postgres:
         image: postgres
         env: 
