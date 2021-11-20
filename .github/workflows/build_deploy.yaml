@@ -20,12 +20,15 @@ jobs:
       ALGORITHM: ${{secrets.ALGORITHM}}
       ACCESS_TOKEN_EXPIRY: ${{secrets.ACCESS_TOKEN_EXPIRY}}
 
+    runs-on: ubuntu-latest
+
     services:
       postgres:
         image: postgres
         env: 
+          POSTGRES_HOST: ${{secrets.DB_HOST}}
           POSTGRES_PASSWORD: ${{secrets.DB_PASS}}
-          POSTGRES_DB: fastapi_test
+          POSTGRES_DB: ${{secrets.DB_NAME}}_test
         ports:
           - 5432:5432
         options: >-
@@ -34,8 +37,19 @@ jobs:
           --health-timeout 5s
           --health-retries 5
 
-    runs-on: ubuntu-latest
     steps:
+      - name: Install PostgreSQL client
+        run: |
+          apt-get update
+          apt-get install --yes postgresql-client
+
+      # queries database with postgres client
+      - name: Query database
+        run: psql -h localhost -d fast_api_test -U postgres -c 'SELECT 1;'
+        env:
+          # postgress password is required; alternatively, you can run:
+          # `PGPASSWORD=postgres_password psql ...`
+          PGPASSWORD: ${{secrets.DB_PASS}}
       - name: pulling git repo
         uses: actions/checkout@v2
       - name: install python version 3.9
