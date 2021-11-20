@@ -3,10 +3,12 @@ from jose import jwt
 from app import schemas
 from app.config import settings
 
+
 def test_root(client):
     res = client.get("/")
     assert res.json().get('message') == 'Hello World'
     assert res.status_code == 200
+
 
 def test_create_user(client):
     email = "hello@gmail.com"
@@ -19,6 +21,7 @@ def test_create_user(client):
     response = schemas.UserResponse(**res.json())
     assert response.data.email == email
     assert res.status_code == 201
+
 
 def test_login_user(test_user, client):
     res = client.post(
@@ -33,6 +36,7 @@ def test_login_user(test_user, client):
     assert id == test_user['id']
     assert login_res.data.token_type == "bearer"
     assert res.status_code == 200
+
 
 @pytest.mark.parametrize("email, password, status_code", [
     ('email', '1234', 403),
