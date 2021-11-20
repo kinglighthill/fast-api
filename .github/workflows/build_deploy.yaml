@@ -38,18 +38,6 @@ jobs:
           --health-retries 5
 
     steps:
-      # - name: Install PostgreSQL client
-      #   run: |
-      #     sudo apt-get update
-      #     sudo apt-get install --yes postgresql-client
-
-      # # queries database with postgres client
-      # - name: Query database
-      #   run: psql -h localhost -d fast_api_test -U postgres -c 'SELECT 1;'
-      #   env:
-      #     # postgress password is required; alternatively, you can run:
-      #     # `PGPASSWORD=postgres_password psql ...`
-      #     PGPASSWORD: ${{secrets.DB_PASS}}
       - name: pulling git repo
         uses: actions/checkout@v2
       - name: install python version 3.9
@@ -63,5 +51,5 @@ jobs:
       - name: test with pytest
         run: |
           pip install pytest
-          pytest tests/test_3_likes.py -v -s 
+          pytest
           
