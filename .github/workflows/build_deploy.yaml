@@ -13,7 +13,7 @@ jobs:
     env:
       DB_HOST: ${{secrets.DB_HOST}}
       DB_PORT: ${{secrets.DB_PORT}}
-      DB_NAME: ${secrets.{DB_NAME}}
+      DB_NAME: ${{secrets.{DB_NAME}}
       DB_USER: ${{secrets.DB_USER}}
       DB_PASS: ${{secrets.DB_PASS}}
       SECRET_KEY: ${{secrets.SECRET_KEY}}
@@ -38,18 +38,18 @@ jobs:
           --health-retries 5
 
     steps:
-      - name: Install PostgreSQL client
-        run: |
-          sudo apt-get update
-          sudo apt-get install --yes postgresql-client
+      # - name: Install PostgreSQL client
+      #   run: |
+      #     sudo apt-get update
+      #     sudo apt-get install --yes postgresql-client
 
-      # queries database with postgres client
-      - name: Query database
-        run: psql -h localhost -d fast_api_test -U postgres -c 'SELECT 1;'
-        env:
-          # postgress password is required; alternatively, you can run:
-          # `PGPASSWORD=postgres_password psql ...`
-          PGPASSWORD: ${{secrets.DB_PASS}}
+      # # queries database with postgres client
+      # - name: Query database
+      #   run: psql -h localhost -d fast_api_test -U postgres -c 'SELECT 1;'
+      #   env:
+      #     # postgress password is required; alternatively, you can run:
+      #     # `PGPASSWORD=postgres_password psql ...`
+      #     PGPASSWORD: ${{secrets.DB_PASS}}
       - name: pulling git repo
         uses: actions/checkout@v2
       - name: install python version 3.9
