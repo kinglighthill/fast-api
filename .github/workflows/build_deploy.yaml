@@ -49,5 +49,5 @@ jobs:
       - name: test with pytest
         run: |
           pip install pytest
-          pytest tests\test_1_user.py -v -s 
+          pytest tests/test_1_users.py -v -s 
           
